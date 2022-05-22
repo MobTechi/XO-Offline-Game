@@ -1,0 +1,24 @@
+<resources>
+    // Game strings
+    <string name="app_name">XO Offline Game</string>
+    <string name="company_name">mobTech</string>
+
+    // Game content
+    <string name="single_player">Single Player</string>
+    <string name="multi_player">Multi Player</string>
+
+    <string name="x_turn">X\'s Turn - Tap to play</string>
+    <string name="o_turn">O\'s Turn - Tap to play</string>
+    <string name="match_draw">Match Draw</string>
+    <string name="x_won">X has won</string>
+    <string name="o_won">O has won</string>
+
+    // Dialog content
+    <string name="exit_confirmation">Are you exit the game?</string>
+    <string name="main_menu_confirmation">Are you go to main menu?</string>
+    <string name="main_menu">Main Menu</string>
+    <string name="exit">Exit</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+</resources>
