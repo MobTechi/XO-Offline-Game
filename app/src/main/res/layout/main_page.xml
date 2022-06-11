@@ -22,13 +22,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/splash_logo"
+        android:id="@+id/game_icon"
         android:layout_width="wrap_content"
         android:layout_height="300dp"
         android:layout_marginTop="30dp"
         android:paddingLeft="50dp"
         android:paddingRight="50dp"
-        android:src="@drawable/xo"
+        android:src="@drawable/xo_ic"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -38,7 +38,7 @@
         android:layout_marginTop="30dp"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/splash_logo">
+        app:layout_constraintTop_toBottomOf="@+id/game_icon">
 
         <Button
             android:id="@+id/single_player"

@@ -16,20 +16,17 @@ class MainPage : AppCompatActivity() {
         getVersionCode()
     }
 
-    private fun tapSound() {
-        val soundService = SoundService()
-        soundService.tapSound()
-    }
-
     private fun getVersionCode() {
+        val versionTextView = findViewById<TextView>(R.id.version)
         try {
             val version = packageManager.getPackageInfo(packageName, 0).versionName
-            (findViewById<View>(R.id.version) as TextView).text = version
+            versionTextView.text = version
         } catch (e: PackageManager.NameNotFoundException) {
+            versionTextView.text = resources.getString(R.string.company_name)
         }
     }
 
-    fun playSinglePlayer(view: View) {
+    fun playSinglePlayer(@Suppress("UNUSED_PARAMETER") view: View) {
         tapSound()
         val playWithComputerIntent = Intent(this, GamePage::class.java)
         playWithComputerIntent.putExtra("type", resources.getString(R.string.single_player))
@@ -37,12 +34,17 @@ class MainPage : AppCompatActivity() {
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
 
-    fun playMultiPlayer(view: View) {
+    fun playMultiPlayer(@Suppress("UNUSED_PARAMETER") view: View) {
         tapSound()
         val playWithFriendIntent = Intent(this, GamePage::class.java)
         playWithFriendIntent.putExtra("type", resources.getString(R.string.multi_player))
         this.startActivity(playWithFriendIntent)
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+    }
+
+    private fun tapSound() {
+        val soundService = SoundService()
+        soundService.tapSound()
     }
 
     override fun onBackPressed() {

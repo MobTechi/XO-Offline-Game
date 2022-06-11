@@ -2,10 +2,10 @@ package com.mobtech.xo_offline_game
 
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -124,7 +124,7 @@ class GamePage : AppCompatActivity() {
                 img.animate().translationYBy(1000f).duration = 300
                 checkGameStatus()
 
-                Handler().postDelayed({
+                Handler(Looper.getMainLooper()).postDelayed({
                     if (gameActive) {
                         computerPlay(tappedImage)
                     }
@@ -210,17 +210,16 @@ class GamePage : AppCompatActivity() {
             AlertDialog.Builder(this, R.style.CustomDialog).setView(restartDialogView)
         restartDialogBuilder.setCancelable(false)
 
-        val wonLayout = restartDialogView.findViewById<RelativeLayout>(R.id.won_layout)
         val playerIcon = restartDialogView.findViewById<ImageView>(R.id.player_icon)
         val homeButton = restartDialogView.findViewById<CardView>(R.id.home_btn)
         val playAgainButton = restartDialogView.findViewById<CardView>(R.id.play_again)
         val drawText = restartDialogView.findViewById<TextView>(R.id.match_draw)
 
-        wonLayout.visibility = View.GONE
+        playerIcon.visibility = View.GONE
         drawText.text = message
 
         if (message != getString(R.string.match_draw)) {
-            wonLayout.visibility = View.VISIBLE
+            playerIcon.visibility = View.VISIBLE
             if (message == getString(R.string.x_won)) {
                 xScore++
                 (findViewById<View>(R.id.x_score) as TextView).text = xScore.toString()
@@ -238,13 +237,11 @@ class GamePage : AppCompatActivity() {
         //set Listener
         homeButton.setOnClickListener {
             //close dialog
-            tapSound()
             restartDialog.dismiss()
             finish()
         }
         playAgainButton.setOnClickListener {
             //close dialog
-            tapSound()
             restartDialog.dismiss()
             gameReset()
         }
@@ -289,8 +286,7 @@ class GamePage : AppCompatActivity() {
         soundService.tapSound()
     }
 
-    fun goBack(view: View) {
-        tapSound()
+    fun goBack(@Suppress("UNUSED_PARAMETER") view: View) {
         mainMenuDialog()
     }
 

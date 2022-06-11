@@ -5,6 +5,7 @@ This project was created on Android Studio with Kotlin language
 ## Prerequisites
 * [Git](http://git-scm.com/)
 * [Android studio](https://developer.android.com/studio/install)
+* [Kotlin](https://kotlinlang.org/)
 
 ## Installation
 `git clone https://github.com/mobTech-Github/XO-Offline-Game.git` this repository
