@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.mobtech.xo_offline_game.service.SoundService
 
 class MainPage : AppCompatActivity() {
 
