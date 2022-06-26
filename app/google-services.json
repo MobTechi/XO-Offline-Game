@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "968023006523",
+    "project_id": "xo-offline-game",
+    "storage_bucket": "xo-offline-game.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:968023006523:android:5154147240d2b1a1ae2b1e",
+        "android_client_info": {
+          "package_name": "com.mobtech.xo_offline_game"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "968023006523-pmo3fmbl9vi2fr24libvtdbd43qqlbe6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDESQPDE6GZHnwhZsEqgE-UOqojytbgec"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "968023006523-pmo3fmbl9vi2fr24libvtdbd43qqlbe6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -6,11 +6,11 @@ import java.lang.reflect.InvocationTargetException
 
 class SoundService {
     fun tapSound() {
-        // try to play tap sound using try/catch block
+        // Play tap sound using try/catch block
         try {
-            val toneGenerator = ToneGenerator(AudioManager.STREAM_MUSIC, 100);
+            val toneGenerator = ToneGenerator(AudioManager.STREAM_MUSIC, 100)
             toneGenerator.startTone(ToneGenerator.TONE_PROP_BEEP, 200)
-            toneGenerator.release();
+            toneGenerator.release()
         } catch (exception: InvocationTargetException) {
         }
     }
