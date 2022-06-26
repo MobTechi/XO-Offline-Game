@@ -14,7 +14,7 @@ import com.mobtech.xo_offline_game.service.SoundService
 import kotlin.random.Random
 
 class GamePage : AppCompatActivity() {
-    var status: TextView? = null
+    private var status: TextView? = null
     private var isComputer = false
     private var isComputerPlayed = true
     private var gameActive = true
