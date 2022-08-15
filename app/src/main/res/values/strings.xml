@@ -21,4 +21,6 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
 
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="privacy_description">Do you like to view the privacy policy for the XO Offline Game?</string>
 </resources>
