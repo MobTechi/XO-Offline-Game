@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.mobtech.xo_offline_game.R
 import com.mobtech.xo_offline_game.Utils.Utils
 import com.mobtech.xo_offline_game.service.SoundService
@@ -20,6 +21,7 @@ class MainPage : AppCompatActivity() {
 
     // Values
     private val musicPref = "musicPref"
+    private val policyURL = "https://tamilandroo.web.app/xo-offline-game/privacy-policy"
 
     // Properties
     private var isMusic: Boolean = true
@@ -89,12 +91,27 @@ class MainPage : AppCompatActivity() {
         builder.setIcon(R.mipmap.ic_launcher)
         builder.setPositiveButton(R.string.yes) { dialogInterface, _ ->
             dialogInterface.dismiss()
-            val policyURL = "https://tamilandroo.web.app/xo-offline-game/privacy-policy"
-            val privacyPolicyIntent = Intent(Intent.ACTION_VIEW)
-            privacyPolicyIntent.data = Uri.parse(policyURL)
-            startActivityForResult(privacyPolicyIntent, 111)
+            try {
+                val policyIntent = Intent(Intent.ACTION_VIEW, Uri.parse(policyURL))
+                ContextCompat.startActivity(this, policyIntent, null)
+            } catch (e: Exception) {
+                showPrivacyPolicyURL()
+            }
         }
         builder.setNegativeButton(R.string.no) { dialogInterface, _ ->
+            dialogInterface.dismiss()
+        }
+        // Create the AlertDialog
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.show()
+    }
+
+    private fun showPrivacyPolicyURL() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(R.string.privacy_policy)
+        builder.setMessage("${getString(R.string.no_browser_found)}\n\nPrivacy Policy URL: $policyURL")
+        builder.setIcon(R.mipmap.ic_launcher)
+        builder.setPositiveButton(R.string.ok) { dialogInterface, _ ->
             dialogInterface.dismiss()
         }
         // Create the AlertDialog

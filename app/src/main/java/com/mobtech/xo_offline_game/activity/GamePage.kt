@@ -333,7 +333,7 @@ class GamePage : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(R.string.main_menu)
         builder.setMessage(R.string.main_menu_confirmation)
-
+        builder.setIcon(R.mipmap.ic_launcher)
         builder.setPositiveButton(R.string.yes) { dialogInterface, _ ->
             dialogInterface.dismiss()
             finish()
