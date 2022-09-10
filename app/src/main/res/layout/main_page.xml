@@ -34,65 +34,131 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <LinearLayout
+        android:id="@+id/mainMenuLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
+        android:clickable="false"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@+id/game_icon">
 
-        <Button
-            android:id="@+id/single_player"
-            android:layout_width="250dp"
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/round_btn"
-            android:onClick="playSinglePlayer"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:text="@string/single_player"
-            android:textColor="@color/white"
-            android:textSize="20dp"
-            android:textStyle="bold" />
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
 
-        <Button
-            android:id="@+id/multi_player"
-            android:layout_width="250dp"
+            <RelativeLayout
+                android:id="@+id/playSinglePlayer"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/navy_light_blue"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/icSinglePlayer"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_single_player"
+                    app:tint="@color/navy_blue" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/icSinglePlayer"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="@string/single_player"
+                    android:textColor="@color/blue"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/round_btn"
-            android:onClick="playMultiPlayer"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:text="@string/multi_player"
-            android:textColor="@color/white"
-            android:textSize="20dp"
-            android:textStyle="bold" />
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="20dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+            <RelativeLayout
+                android:id="@+id/playMultiPlayer"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/navy_light_blue"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/icMultiPlayer"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_multiplayer"
+                    app:tint="@color/btn_color" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/icMultiPlayer"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="@string/multi_player"
+                    android:textColor="@color/blue"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="20dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
 
-            <ImageView
-                android:id="@+id/musicToggle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/round_btn"
-                android:padding="10dp"
-                android:src="@drawable/music_on_ic" />
+            <RelativeLayout
+                android:id="@+id/settings"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/navy_light_blue"
+                android:gravity="center">
 
-            <ImageView
-                android:id="@+id/policy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:background="@drawable/round_btn"
-                android:onClick="privacyPolicy"
-                android:padding="10dp"
-                android:src="@drawable/privacy_policy_ic" />
-        </LinearLayout>
+                <ImageView
+                    android:id="@+id/icSettings"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_settings" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/icSettings"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="@string/settings"
+                    android:textColor="@color/blue"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
 
     <TextView

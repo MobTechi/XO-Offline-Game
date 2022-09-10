@@ -1,37 +1,39 @@
 package com.mobtech.xo_offline_game.activity
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.media.MediaPlayer
-import android.net.Uri
 import android.os.Bundle
-import android.view.View
-import android.widget.ImageView
+import android.os.Handler
+import android.os.Looper
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.mobtech.xo_offline_game.R
-import com.mobtech.xo_offline_game.Utils.Utils
-import com.mobtech.xo_offline_game.service.SoundService
+import com.mobtech.xo_offline_game.Utils.CommonString
+import com.mobtech.xo_offline_game.Utils.CommonString.exit
+import com.mobtech.xo_offline_game.Utils.CommonString.exit_confirmation
+import com.mobtech.xo_offline_game.Utils.CommonString.gameSoundLevel
+import com.mobtech.xo_offline_game.Utils.CommonString.no
+import com.mobtech.xo_offline_game.Utils.CommonString.yes
+import com.mobtech.xo_offline_game.Utils.CommonUtil.getBooleanSharedPref
+import com.mobtech.xo_offline_game.Utils.CommonUtil.tapSoundUtil
+import com.mobtech.xo_offline_game.Utils.CommonUtil.versionCode
 
 @Suppress("DEPRECATION")
 class MainPage : AppCompatActivity() {
 
-    // Values
-    private val musicPref = "musicPref"
-    private val policyURL = "https://tamilandroo.web.app/xo-offline-game/privacy-policy"
-
     // Properties
     private var isMusic: Boolean = true
-    private lateinit var musicToggle: ImageView
+    private var isLoaded: Boolean = false
+    // var serviceBound = false
+
+    // private var musicService: MusicService? = null
     private lateinit var mediaPlayer: MediaPlayer
     private val gameIntentCode = 111
-
-    // Injection
-    private val utils = Utils()
-    private val soundService = SoundService(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,92 +42,50 @@ class MainPage : AppCompatActivity() {
         getVersionCode()
     }
 
+    // Initialize the main page view
     private fun initialView() {
-        isMusic = utils.getPref(this, musicPref)
+        isMusic = getBooleanSharedPref(this, gameSoundLevel)
         handleMusic(isMusic)
-        musicToggle = findViewById(R.id.musicToggle)
-        setIconToImageView(isMusic, musicToggle, R.drawable.music_on_ic, R.drawable.music_off_ic)
-
-        musicToggle.setOnClickListener {
-            isMusic = !isMusic
-            setIconToImageView(isMusic, musicToggle, R.drawable.music_on_ic, R.drawable.music_off_ic)
-            handleMusic(isMusic)
-            utils.setPref(this, musicPref, isMusic)
+        isLoaded = true
+        findViewById<RelativeLayout>(R.id.playSinglePlayer).setOnClickListener {
+            intentHandler(GamePage(), resources.getString(R.string.single_player))
+        }
+        findViewById<RelativeLayout>(R.id.playMultiPlayer).setOnClickListener {
+            intentHandler(GamePage(), resources.getString(R.string.multi_player))
+        }
+        findViewById<RelativeLayout>(R.id.settings).setOnClickListener {
+            intentHandler(SettingsPage(), resources.getString(R.string.settings))
         }
     }
 
+    // Get the game version code and display in the main page
     @SuppressLint("SetTextI18n")
     private fun getVersionCode() {
         val versionTextView = findViewById<TextView>(R.id.version)
         try {
-            val version = packageManager.getPackageInfo(packageName, 0).versionName
-            versionTextView.text = "V $version"
+            versionTextView.text = versionCode(this)
         } catch (e: PackageManager.NameNotFoundException) {
             versionTextView.text = resources.getString(R.string.company_name)
         }
     }
 
-    fun playSinglePlayer(@Suppress("UNUSED_PARAMETER") view: View) {
-        tapSound()
-        val playWithComputerIntent = Intent(this, GamePage::class.java)
-        playWithComputerIntent.putExtra("type", resources.getString(R.string.single_player))
-        playWithComputerIntent.putExtra("isMusic", isMusic)
-        this.startActivityForResult(playWithComputerIntent, gameIntentCode)
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
-    }
-
-    fun playMultiPlayer(@Suppress("UNUSED_PARAMETER") view: View) {
-        tapSound()
-        val playWithFriendIntent = Intent(this, GamePage::class.java)
-        playWithFriendIntent.putExtra("type", resources.getString(R.string.multi_player))
-        playWithFriendIntent.putExtra("isMusic", isMusic)
-        this.startActivityForResult(playWithFriendIntent, gameIntentCode)
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
-    }
-
-    fun privacyPolicy(@Suppress("UNUSED_PARAMETER") view: View) {
-        tapSound()
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle(R.string.privacy_policy)
-        builder.setMessage(R.string.privacy_description)
-        builder.setIcon(R.mipmap.ic_launcher)
-        builder.setPositiveButton(R.string.yes) { dialogInterface, _ ->
-            dialogInterface.dismiss()
-            try {
-                val policyIntent = Intent(Intent.ACTION_VIEW, Uri.parse(policyURL))
-                ContextCompat.startActivity(this, policyIntent, null)
-            } catch (e: Exception) {
-                showPrivacyPolicyURL()
-            }
+    private fun intentHandler(activity: Activity, gameType: String) {
+        if (isLoaded) {
+            isLoaded = false
+            handleMusic(false)
+            tapSoundUtil(this)
+            val intent = Intent(this, activity.javaClass)
+            intent.putExtra("type", gameType)
+            intent.putExtra("isMusic", isMusic)
+            this.startActivityForResult(intent, gameIntentCode)
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         }
-        builder.setNegativeButton(R.string.no) { dialogInterface, _ ->
-            dialogInterface.dismiss()
-        }
-        // Create the AlertDialog
-        val alertDialog: AlertDialog = builder.create()
-        alertDialog.show()
-    }
-
-    private fun showPrivacyPolicyURL() {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle(R.string.privacy_policy)
-        builder.setMessage("${getString(R.string.no_browser_found)}\n\nPrivacy Policy URL: $policyURL")
-        builder.setIcon(R.mipmap.ic_launcher)
-        builder.setPositiveButton(R.string.ok) { dialogInterface, _ ->
-            dialogInterface.dismiss()
-        }
-        // Create the AlertDialog
-        val alertDialog: AlertDialog = builder.create()
-        alertDialog.show()
-    }
-
-    private fun tapSound() {
-        soundService.tapSound()
     }
 
     private fun handleMusic(isPlay: Boolean) {
         if (isPlay) {
             mediaPlayer = MediaPlayer.create(this, R.raw.bg_music)
+            mediaPlayer.isLooping = true
             if (!mediaPlayer.isPlaying) {
                 mediaPlayer.start()
             }
@@ -136,22 +96,36 @@ class MainPage : AppCompatActivity() {
             }
         }
     }
+//    private fun handleMusic() {
+//        if (!serviceBound) {
+//            val playerIntent = Intent(this, MusicService::class.java)
+//            startService(playerIntent)
+//            bindService(playerIntent, serviceConnection, Context.BIND_AUTO_CREATE)
+//        } else {
+//            //Service is active
+//            //Send a broadcast to the service -> PLAY_NEW_AUDIO
+//            val broadcastPlayNewAudio = "${this.packageName}.PlayNewAudio";
+//            val broadcastIntent = Intent(broadcastPlayNewAudio)
+//            sendBroadcast(broadcastIntent)
+//        }
+//    }
 
-    private fun setIconToImageView(
-        isTrue: Boolean,
-        imageView: ImageView,
-        image1: Int,
-        image2: Int,
-    ) {
-        if (isTrue) {
-            imageView.setImageResource(image1)
-        } else {
-            imageView.setImageResource(image2)
-        }
-    }
+//    private val serviceConnection: ServiceConnection = object : ServiceConnection {
+//        override fun onServiceConnected(name: ComponentName, service: IBinder) {
+//            // We've bound to LocalService, cast the IBinder and get LocalService instance
+//            val binder: MusicService.LocalBinder = service as MusicService.LocalBinder
+//            musicService = binder.service
+//            serviceBound = true
+//        }
+//
+//        override fun onServiceDisconnected(name: ComponentName) {
+//            serviceBound = false
+//        }
+//    }
 
     override fun onResume() {
         super.onResume()
+        isMusic = getBooleanSharedPref(this, gameSoundLevel)
         if (isMusic && !mediaPlayer.isPlaying) {
             mediaPlayer.start()
         }
@@ -168,23 +142,28 @@ class MainPage : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == gameIntentCode) {
+            isMusic = getBooleanSharedPref(this, gameSoundLevel)
             handleMusic(false)
             handleMusic(isMusic)
+            val countDownTimer: Long = 1500
+            Handler(Looper.getMainLooper()).postDelayed({
+                isLoaded = true
+            }, countDownTimer)
         }
     }
 
     override fun onBackPressed() {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle(R.string.exit)
-        builder.setMessage(R.string.exit_confirmation)
+        builder.setTitle(exit)
+        builder.setMessage(exit_confirmation)
         builder.setIcon(R.mipmap.ic_launcher)
 
-        builder.setPositiveButton(R.string.yes) { dialogInterface, _ ->
+        builder.setPositiveButton(yes) { dialogInterface, _ ->
             dialogInterface.dismiss()
             handleMusic(false)
             finish()
         }
-        builder.setNegativeButton(R.string.no) { dialogInterface, _ ->
+        builder.setNegativeButton(no) { dialogInterface, _ ->
             dialogInterface.dismiss()
         }
         // Create the AlertDialog

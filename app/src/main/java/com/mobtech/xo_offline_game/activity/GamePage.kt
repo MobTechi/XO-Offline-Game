@@ -1,5 +1,6 @@
 package com.mobtech.xo_offline_game.activity
 
+import android.annotation.SuppressLint
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
@@ -12,7 +13,14 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.mobtech.xo_offline_game.R
-import com.mobtech.xo_offline_game.service.SoundService
+import com.mobtech.xo_offline_game.Utils.CommonString
+import com.mobtech.xo_offline_game.Utils.CommonString.main_menu
+import com.mobtech.xo_offline_game.Utils.CommonString.main_menu_confirmation
+import com.mobtech.xo_offline_game.Utils.CommonString.no
+import com.mobtech.xo_offline_game.Utils.CommonString.yes
+import com.mobtech.xo_offline_game.Utils.CommonUtil
+import com.mobtech.xo_offline_game.Utils.CommonUtil.tapSoundUtil
+import java.util.*
 import kotlin.random.Random
 
 class GamePage : AppCompatActivity() {
@@ -52,12 +60,22 @@ class GamePage : AppCompatActivity() {
         intArrayOf(2, 4, 6)
     )
 
-    // Injections
-    private val soundService = SoundService(this)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.game_page)
 
-    // this function will be called every time a
-    // players tap in an empty box of the grid
+        val gameType = intent.getStringExtra("type").toString()
+        isMusic = intent.getBooleanExtra("isMusic", false)
+        handleMusic(isMusic)
+        isSinglePayerMatch = gameType == resources.getString(R.string.single_player)
+
+        status = findViewById(R.id.status)
+        handleGameLevel(gameType)
+    }
+
+    // This method is trigger when player click the xo board
     fun playerTap(view: View) {
+        // Single player mode play with computer with difficult levels
         if ((activePlayer == 0) && isSinglePayerMatch) {
             isComputerPlayed = false
             val img = view as ImageView
@@ -96,49 +114,32 @@ class GamePage : AppCompatActivity() {
             } else {
                 isComputerPlayed = true
             }
-        } else {
-            val img = view as ImageView
-            val tappedImage = img.tag.toString().toInt()
-
+        }
+        // Play with two player you and your friend
+        else {
+            val xoIcon = view as ImageView
+            val tappedXO = xoIcon.tag.toString().toInt()
             // if the tapped image is empty
-            if (gameState[tappedImage] == 2) {
-                // increase the counter
-                // after every tap
+            if (gameState[tappedXO] == 2) {
                 counter++
-
-                // check if its the last box
                 if (counter == 9) {
-                    // reset the game
                     gameActive = false
                 }
-
-                // mark this position
-                gameState[tappedImage] = activePlayer
-
-                // this will give a motion
-                // effect to the image
-                img.translationY = -1000f
-
-                // change the active player
-                // from 0 to 1 or 1 to 0
+                gameState[tappedXO] = activePlayer
+                xoIcon.translationY = -1000f
                 tapSound()
+                // If activePlayer is 0 player is X else player is Y
                 if (activePlayer == 0) {
-                    // set the image of x
-                    img.setImageResource(R.drawable.x)
+                    xoIcon.setImageResource(R.drawable.x)
                     activePlayer = 1
-
-                    // change the status
                     status?.text = getString(R.string.o_turn)
                 } else {
-                    // set the image of o
-                    img.setImageResource(R.drawable.o)
+                    xoIcon.setImageResource(R.drawable.o)
                     activePlayer = 0
                     val status = findViewById<TextView>(R.id.status)
-
-                    // change the status
                     status.text = getString(R.string.x_turn)
                 }
-                img.animate().translationYBy(1000f).duration = 300
+                xoIcon.animate().translationYBy(1000f).duration = 300
             }
             checkGameStatus()
         }
@@ -281,16 +282,16 @@ class GamePage : AppCompatActivity() {
         status.text = getString(R.string.x_turn)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.game_page)
-
-        val gameType = intent.getStringExtra("type").toString()
-        isMusic = intent.getBooleanExtra("isMusic", false)
-        handleMusic(isMusic)
-        isSinglePayerMatch = gameType == resources.getString(R.string.single_player)
-
-        status = findViewById(R.id.status)
+    @SuppressLint("SetTextI18n")
+    private fun handleGameLevel(gameType: String) {
+        val gameLevelText = findViewById<TextView>(R.id.gameLevel)
+        if (isSinglePayerMatch) {
+            val gameDifLevel = CommonUtil.getIntSharedPref(this, CommonString.gameLevel)
+            val gameDifLevelText = CommonUtil.getDiffLabel(gameDifLevel)
+            gameLevelText.text = "$gameType\nLevel $gameDifLevelText"
+        } else {
+            gameLevelText.text = "$gameType\nPlay with Friends"
+        }
     }
 
     override fun onResume() {
@@ -322,7 +323,7 @@ class GamePage : AppCompatActivity() {
     }
 
     private fun tapSound() {
-        soundService.tapSound()
+        tapSoundUtil(this)
     }
 
     override fun onBackPressed() {
@@ -331,14 +332,15 @@ class GamePage : AppCompatActivity() {
 
     private fun mainMenuDialog() {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle(R.string.main_menu)
-        builder.setMessage(R.string.main_menu_confirmation)
+        builder.setTitle(main_menu)
+        builder.setMessage(main_menu_confirmation)
         builder.setIcon(R.mipmap.ic_launcher)
-        builder.setPositiveButton(R.string.yes) { dialogInterface, _ ->
+        builder.setPositiveButton(yes) { dialogInterface, _ ->
             dialogInterface.dismiss()
             finish()
+            this.overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         }
-        builder.setNegativeButton(R.string.no) { dialogInterface, _ ->
+        builder.setNegativeButton(no) { dialogInterface, _ ->
             dialogInterface.dismiss()
         }
         // Create the AlertDialog
