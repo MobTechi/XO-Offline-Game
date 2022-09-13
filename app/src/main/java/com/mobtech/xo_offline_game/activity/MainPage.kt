@@ -2,23 +2,20 @@ package com.mobtech.xo_offline_game.activity
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.Window
+import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.mobtech.xo_offline_game.R
-import com.mobtech.xo_offline_game.Utils.CommonString
-import com.mobtech.xo_offline_game.Utils.CommonString.exit
-import com.mobtech.xo_offline_game.Utils.CommonString.exit_confirmation
 import com.mobtech.xo_offline_game.Utils.CommonString.gameSoundLevel
-import com.mobtech.xo_offline_game.Utils.CommonString.no
-import com.mobtech.xo_offline_game.Utils.CommonString.yes
 import com.mobtech.xo_offline_game.Utils.CommonUtil.getBooleanSharedPref
 import com.mobtech.xo_offline_game.Utils.CommonUtil.tapSoundUtil
 import com.mobtech.xo_offline_game.Utils.CommonUtil.versionCode
@@ -48,13 +45,13 @@ class MainPage : AppCompatActivity() {
         handleMusic(isMusic)
         isLoaded = true
         findViewById<RelativeLayout>(R.id.playSinglePlayer).setOnClickListener {
-            intentHandler(GamePage(), resources.getString(R.string.single_player))
+            intentHandler(GamePage(), true)
         }
         findViewById<RelativeLayout>(R.id.playMultiPlayer).setOnClickListener {
-            intentHandler(GamePage(), resources.getString(R.string.multi_player))
+            intentHandler(GamePage(), false)
         }
         findViewById<RelativeLayout>(R.id.settings).setOnClickListener {
-            intentHandler(SettingsPage(), resources.getString(R.string.settings))
+            intentHandler(SettingsPage(), false)
         }
     }
 
@@ -69,13 +66,13 @@ class MainPage : AppCompatActivity() {
         }
     }
 
-    private fun intentHandler(activity: Activity, gameType: String) {
+    private fun intentHandler(activity: Activity, singlePlayer: Boolean) {
         if (isLoaded) {
             isLoaded = false
             handleMusic(false)
             tapSoundUtil(this)
             val intent = Intent(this, activity.javaClass)
-            intent.putExtra("type", gameType)
+            intent.putExtra("singlePlayer", singlePlayer)
             intent.putExtra("isMusic", isMusic)
             this.startActivityForResult(intent, gameIntentCode)
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
@@ -153,21 +150,17 @@ class MainPage : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle(exit)
-        builder.setMessage(exit_confirmation)
-        builder.setIcon(R.mipmap.ic_launcher)
-
-        builder.setPositiveButton(yes) { dialogInterface, _ ->
-            dialogInterface.dismiss()
-            handleMusic(false)
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.exit_dialog_layout)
+        dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.setCancelable(false)
+        dialog.show()
+        val exit = dialog.findViewById<Button>(R.id.yes_button)
+        val dismiss = dialog.findViewById<Button>(R.id.no_button)
+        exit.setOnClickListener {
             finish()
         }
-        builder.setNegativeButton(no) { dialogInterface, _ ->
-            dialogInterface.dismiss()
-        }
-        // Create the AlertDialog
-        val alertDialog: AlertDialog = builder.create()
-        alertDialog.show()
+        dismiss.setOnClickListener { dialog.dismiss() }
     }
 }

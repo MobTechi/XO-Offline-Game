@@ -3,22 +3,6 @@
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:statusBarColor">@color/blue</item>
     </style>
-
-    <style name="CustomDialog" parent="android:Theme.Dialog">
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-    </style>
-
-    <!-- Alert Dialog -->
-    <style name="difficultyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <!-- Used for the buttons -->
-        <item name="colorAccent">@color/btn_color</item>
-        <!-- Used for the title and text -->
-        <item name="android:textColorPrimary">@color/blue</item>
-        <!-- Used for the background -->
-        <item name="android:background">@color/navy_light_blue</item>
-    </style>
-
     <!-- Switch button theme -->
     <style name="SCBSwitch" parent="Theme.AppCompat.Light">
         <!-- active thumb & track color (30% transparency) -->

@@ -57,14 +57,4 @@ object CommonUtil {
         val version = context.packageManager.getPackageInfo(context.packageName, 0).versionName
         return "V $version"
     }
-
-    fun getDiffLabel(level: Int): String {
-        var label = ""
-        when (level) {
-            0 -> label = "Easy"
-            1 -> label = "Medium"
-            2 -> label = "Hard"
-        }
-        return label
-    }
 }

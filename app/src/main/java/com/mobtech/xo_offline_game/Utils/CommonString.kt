@@ -3,17 +3,9 @@ package com.mobtech.xo_offline_game.Utils
 object CommonString {
 
     // Game constant
-    const val gameLevel = "gameLevel"
-    const val gameVibrationLevel = "gameVibrationLevel"
     const val gameSoundLevel = "gameMusicLevel"
 
     // Dialog content
-    const val exit_confirmation = "Are you exit the game?"
-    const val main_menu_confirmation = "Are you go to main menu?"
-    const val main_menu = "Main Menu"
-    const val confirm = "Confirm"
-    const val cancel = "Cancel"
-    const val exit = "Exit"
     const val yes = "Yes"
     const val no = "No"
     const val ok = "OK"

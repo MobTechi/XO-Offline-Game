@@ -10,13 +10,14 @@
 
     <string name="x_turn">X\'s Turn - Tap to play</string>
     <string name="o_turn">O\'s Turn - Tap to play</string>
-    <string name="match_draw">Match Draw</string>
-    <string name="x_won">X has won</string>
-    <string name="o_won">O has won</string>
 
     // Settings content
-    <string name="difficulty">Difficulty</string>
     <string name="game_sound">Game Sound</string>
     <string name="rating_game">Rating Game</string>
     <string name="game_privacy_policy">Game Privacy Policy</string>
+
+    // Dialog Content
+    <string name="exit_dialog_title">Do you want to exit the game?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

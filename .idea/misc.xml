@@ -23,6 +23,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2556179775280899" />
         <entry key="app/src/main/res/layout/activity_settings.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/dialog_layout_exit.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/exit_dialog.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/game_over_dialog.xml" value="0.33" />
         <entry key="app/src/main/res/layout/game_page.xml" value="0.5" />
