@@ -11,9 +11,9 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 7,
-      "versionName": "2.0.4",
-      "outputFile": "XO Offline Game 2.0.4-release.apk"
+      "versionCode": 10,
+      "versionName": "2.1.2",
+      "outputFile": "XO Offline Game 2.1.2-release.apk"
     }
   ],
   "elementType": "File"

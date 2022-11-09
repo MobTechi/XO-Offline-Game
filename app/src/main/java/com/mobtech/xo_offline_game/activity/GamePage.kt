@@ -14,6 +14,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mobtech.xo_offline_game.R
+import com.mobtech.xo_offline_game.Utils.CommonString.gamePlayRound
 import com.mobtech.xo_offline_game.Utils.CommonUtil.tapSoundUtil
 import java.util.*
 
@@ -21,6 +22,7 @@ class GamePage : AppCompatActivity() {
     // Properties
     private var isMusic: Boolean = true
     private lateinit var mediaPlayer: MediaPlayer
+    private lateinit var gameRound: TextView
 
     private var flag = 0
     private var isX = 10
@@ -38,6 +40,7 @@ class GamePage : AppCompatActivity() {
     private var sum = IntArray(8)
     private var selectedSinglePlayer = false
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.game_page)
@@ -45,6 +48,8 @@ class GamePage : AppCompatActivity() {
         isMusic = intent.getBooleanExtra("isMusic", false)
         handleMusic(isMusic)
         val gameLevelText = findViewById<TextView>(R.id.gameLevel)
+        gameRound = findViewById(R.id.gameRounds)
+        gameRound.text = gamePlayRound + game
         Toast.makeText(this, getString(R.string.x_turn), Toast.LENGTH_SHORT).show()
         gameLevelText.text = if (selectedSinglePlayer) getString(R.string.single_player) else getString(R.string.multi_player)
     }
@@ -58,7 +63,7 @@ class GamePage : AppCompatActivity() {
         } else {
             try {
                 mediaPlayer.stop()
-            } catch (i: Exception) {
+            } catch (_: Exception) {
             }
         }
     }
@@ -567,9 +572,11 @@ class GamePage : AppCompatActivity() {
         }
     } //end winchecker()
 
+    @SuppressLint("SetTextI18n")
     private fun playMore() {
         if (drawChecker > 0 || win > 0) {
             game++
+            gameRound.text = gamePlayRound + game
             for (i in 0..7) sum[i] = 0
             drawChecker = 0
             val q1: ImageView = findViewById<View>(R.id.imageView0) as ImageView

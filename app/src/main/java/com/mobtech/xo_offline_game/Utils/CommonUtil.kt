@@ -7,7 +7,6 @@ import android.media.AudioManager
 import android.media.ToneGenerator
 import android.preference.PreferenceManager
 import java.lang.reflect.InvocationTargetException
-import java.util.*
 
 object CommonUtil {
 
