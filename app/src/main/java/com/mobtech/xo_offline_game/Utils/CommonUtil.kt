@@ -33,26 +33,6 @@ object CommonUtil {
         return PreferenceManager.getDefaultSharedPreferences(c).getBoolean(pref, true)
     }
 
-    fun setIntSharedPref(c: Context, pref: String, value: Int) {
-        val e = PreferenceManager.getDefaultSharedPreferences(c).edit()
-        e.putInt(pref, value)
-        e.apply()
-    }
-
-    fun getIntSharedPref(c: Context, pref: String): Int {
-        return PreferenceManager.getDefaultSharedPreferences(c).getInt(pref, 0)
-    }
-
-    fun setStringSharedPref(c: Context, pref: String, value: String) {
-        val e = PreferenceManager.getDefaultSharedPreferences(c).edit()
-        e.putString(pref, value)
-        e.apply()
-    }
-
-    fun getStringSharedPref(c: Context, pref: String): String? {
-        return PreferenceManager.getDefaultSharedPreferences(c).getString(pref, "")
-    }
-
     fun versionCode(context: Context): String {
         val version = context.packageManager.getPackageInfo(context.packageName, 0).versionName
         return "V $version"

@@ -11,6 +11,8 @@
     <string name="x_turn">X\'s Turn - Tap to play</string>
     <string name="o_turn">O\'s Turn - Tap to play</string>
 
+    <string name="score_zero">0</string>
+
     // Settings content
     <string name="game_sound">Game Sound</string>
     <string name="rating_game">Rating Game</string>

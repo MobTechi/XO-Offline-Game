@@ -81,10 +81,7 @@ class SettingsPage : AppCompatActivity() {
             if (task.isSuccessful) {
                 // We got the ReviewInfo object
                 val reviewInfo = task.result
-                val flow = reviewManager.launchReviewFlow(this, reviewInfo)
-                flow.addOnCompleteListener {
-                    Toast.makeText(this, "Thanks for Ratting ⭐", Toast.LENGTH_SHORT).show()
-                }
+                reviewManager.launchReviewFlow(this, reviewInfo)
             }
         }
         request.addOnFailureListener {

@@ -4,6 +4,7 @@ object CommonString {
 
     // Game constant
     const val gameSoundLevel = "gameMusicLevel"
+    const val gamePlayRound = "Round "
 
     // Dialog content
     const val yes = "Yes"
