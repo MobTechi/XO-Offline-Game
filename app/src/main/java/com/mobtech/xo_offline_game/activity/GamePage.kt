@@ -613,32 +613,6 @@ class GamePage : AppCompatActivity() {
         }
     }
 
-    private fun gameReset() {
-        for (i in 0..2) for (j in 0..2) tracker[i][j] = 0
-        for (i in 0..2) for (j in 0..2) buttonpressed[i][j] = 0
-        // remove all the images from the boxes inside the grid
-        (findViewById<View>(R.id.imageView0) as ImageView).setImageResource(0)
-        (findViewById<View>(R.id.imageView1) as ImageView).setImageResource(0)
-        (findViewById<View>(R.id.imageView2) as ImageView).setImageResource(0)
-        (findViewById<View>(R.id.imageView3) as ImageView).setImageResource(0)
-        (findViewById<View>(R.id.imageView4) as ImageView).setImageResource(0)
-        (findViewById<View>(R.id.imageView5) as ImageView).setImageResource(0)
-        (findViewById<View>(R.id.imageView6) as ImageView).setImageResource(0)
-        (findViewById<View>(R.id.imageView7) as ImageView).setImageResource(0)
-        (findViewById<View>(R.id.imageView8) as ImageView).setImageResource(0)
-        win = 0
-        drawChecker = 0
-        sumValue = 0
-        resetchecker = 0
-        ctrflag = 0
-        score1 = 0
-        score2 = 0
-        game = 1
-        flag = 0
-        currentgamedonechecker = 0
-        Toast.makeText(this, getString(R.string.x_turn), Toast.LENGTH_SHORT).show()
-    }
-
     private fun showExitDialog() {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)

@@ -1,7 +1,7 @@
 <resources>
     // Game strings
     <string name="app_name">XO Offline Game</string>
-    <string name="company_name">mobTech</string>
+    <string name="company_name">MobTechi</string>
 
     // Game content
     <string name="single_player">Single Player</string>

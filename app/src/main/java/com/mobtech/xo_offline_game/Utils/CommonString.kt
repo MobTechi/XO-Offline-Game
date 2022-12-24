@@ -15,5 +15,5 @@ object CommonString {
     const val privacy_policy = "Privacy Policy"
     const val privacy_description = "Do you like to view the privacy policy for the XO Offline Game?"
     const val no_browser_found = "No browser found that can handle this link"
-    const val policyURL = "https://tamilandroo.web.app/xo-offline-game/privacy-policy"
+    const val policyURL = "https://mobtechi.com/xo_offline_game/privacy-policy"
 }
