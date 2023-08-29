@@ -8,10 +8,10 @@ android {
 
     defaultConfig {
         applicationId "com.mobtech.xo_offline_game"
-        minSdk 21
-        targetSdk 33
-        versionCode 12
-        versionName '2.1.4'
+        minSdkVersion 21
+        targetSdkVersion 33
+        versionCode 13
+        versionName '2.1.5'
         archivesBaseName = "XO Offline Game $versionName"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
