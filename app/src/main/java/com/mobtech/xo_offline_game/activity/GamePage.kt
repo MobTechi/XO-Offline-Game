@@ -570,7 +570,8 @@ class GamePage : AppCompatActivity() {
             Toast.makeText(this, "Match Draw", Toast.LENGTH_SHORT).show()
             drawChecker++
         }
-    } //end winchecker()
+    }
+    //end win checker()
 
     @SuppressLint("SetTextI18n")
     private fun playMore() {
@@ -629,6 +630,7 @@ class GamePage : AppCompatActivity() {
         dismiss.setOnClickListener { dialog.dismiss() }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         showExitDialog()
     }

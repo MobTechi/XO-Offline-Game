@@ -29,7 +29,7 @@ import com.mobtech.xo_offline_game.Utils.CommonUtil.setBooleanSharedPref
 import com.mobtech.xo_offline_game.Utils.CommonUtil.versionCode
 
 
-@Suppress("UNUSED_PARAMETER")
+@Suppress("UNUSED_PARAMETER", "DEPRECATION")
 class SettingsPage : AppCompatActivity() {
 
     // Properties
@@ -136,7 +136,7 @@ class SettingsPage : AppCompatActivity() {
         } else {
             try {
                 mediaPlayer.stop()
-            } catch (i: Exception) {
+            } catch (_: Exception) {
             }
         }
     }
@@ -174,6 +174,7 @@ class SettingsPage : AppCompatActivity() {
         this.overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         super.onBackPressed()
         finish()

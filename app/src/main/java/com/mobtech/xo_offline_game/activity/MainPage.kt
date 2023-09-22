@@ -89,7 +89,7 @@ class MainPage : AppCompatActivity() {
         } else {
             try {
                 mediaPlayer.stop()
-            } catch (i: Exception) {
+            } catch (_: Exception) {
             }
         }
     }
@@ -149,6 +149,7 @@ class MainPage : AppCompatActivity() {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
