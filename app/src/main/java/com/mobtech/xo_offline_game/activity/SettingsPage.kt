@@ -14,7 +14,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.google.android.play.core.review.ReviewManagerFactory
 import com.mobtech.xo_offline_game.R
 import com.mobtech.xo_offline_game.Utils.CommonString.gameSoundLevel
 import com.mobtech.xo_offline_game.Utils.CommonString.no
@@ -75,17 +74,14 @@ class SettingsPage : AppCompatActivity() {
 
     // This method trigger when click the game ratting
     fun ratting(view: View) {
-        val reviewManager = ReviewManagerFactory.create(this)
-        val request = reviewManager.requestReviewFlow()
-        request.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                // We got the ReviewInfo object
-                val reviewInfo = task.result
-                reviewManager.launchReviewFlow(this, reviewInfo)
-            }
-        }
-        request.addOnFailureListener {
-            Toast.makeText(this, "Something wrong. Please Try Again!", Toast.LENGTH_SHORT).show()
+        try {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName"))
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+        } catch (e: android.content.ActivityNotFoundException) {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$packageName"))
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
         }
     }
 
