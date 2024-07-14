@@ -18,6 +18,7 @@ import com.mobtech.xo_offline_game.Utils.CommonString.gamePlayRound
 import com.mobtech.xo_offline_game.Utils.CommonUtil.tapSoundUtil
 import java.util.*
 
+@Suppress("DEPRECATION")
 class GamePage : AppCompatActivity() {
     // Properties
     private var isMusic: Boolean = true
@@ -632,6 +633,7 @@ class GamePage : AppCompatActivity() {
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
+        super.onBackPressed()
         showExitDialog()
     }
 

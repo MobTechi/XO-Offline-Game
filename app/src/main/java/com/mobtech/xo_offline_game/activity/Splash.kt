@@ -7,6 +7,7 @@ import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.mobtech.xo_offline_game.R
 
+@Suppress("DEPRECATION")
 class Splash : AppCompatActivity() {
 
     // Values
